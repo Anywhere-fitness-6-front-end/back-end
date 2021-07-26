@@ -25,7 +25,7 @@ exports.up = async (knex) => {
       classes.dateTime('class_time').notNullable();
       classes.integer('instructor_id').notNullable();
       classes.integer('activity_id').references('activity_id').inTable('activities')
-      classes.enu('intensity', ['unspecified', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, enumName: 'intensity_level' });
+      classes.enu('intensity', ['unspecified', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, existingType: true, enumName: 'intensity_level' });
       classes.text('address').notNullable();
       classes.integer('max_size');
       classes.timestamps(false, true);
