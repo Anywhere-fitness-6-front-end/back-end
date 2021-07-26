@@ -14,9 +14,11 @@ router.get('/', restricted, (req, res, next) => {
 });
 
 router.get('/:id', restricted, (req, res, next) => {
-	Classes.getById(req.params.id).then(
+		Classes.getById(req.params.id, req.decodedToken.user_id).then(
 		result => {
+
 			res.status(200).json(result);
+
 		},
 		error => next(error)
 	);

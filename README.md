@@ -14,17 +14,19 @@
 All of the other routes will require the token received from login to return any data. Include the token as the http header, "Authorization." Certian data may be restricted by individual user as well. (For instance, GET /classes/2 might return different data depending on if the token belongs to the class instructor, a class attendee, or another user.)
 
 ### Classes
-The end points are not written yet, but expect the data to look like this:
+- GET /classes
+- GET /classes/{class_id}
+
+The end points are not all written yet, but expect the data to look like this:
 ```
   {
     class_id: 1,  
     class_name: 'Yoga with Lily',
     class_time: 2021-07-31T01:00:00.000Z,
-    instructor: {
-      instructor_id: 2, 
-      instructor_name: 'Lily Lightwater'
-    }
-    activity: 'yoga',
+    instructor_id: 2, 
+    instructor_name: 'Lily Lightwater'
+    activity_id: 2,
+    activity_name: 'yoga',
     intensity: 'moderate',
     address: '123 Yoga Lane, Sun Town, CA',
     max_size: 12,
