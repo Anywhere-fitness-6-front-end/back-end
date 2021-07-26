@@ -11,7 +11,7 @@ router.post('/register', validateUser, verifyUsernameAvailable, async (req, res)
 		password: hash(req.postedUser.password)
 	}
 	const user = await addUser(newUser);
-	return res.status(200).json(user);
+	return res.status(201).json(user);
 });
 
 router.post('/login', validateUser, verifyUserExists, (req, res, next) => {
