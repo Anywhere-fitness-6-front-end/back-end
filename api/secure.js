@@ -25,8 +25,7 @@ function buildToken(user) {
 }
 
 function decodeToken(token) {
-	// eslint-disable-next-line no-unused-vars
-	return new Promise((resolve, reject) => {
+	return new Promise(resolve => {
 		jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
 			if (err)
 				resolve(null);
@@ -53,4 +52,4 @@ async function restricted(req, res, next) {
 	}
 }
 
-module.exports = { hash, checkPassword, buildToken, restricted };
+module.exports = { hash, checkPassword, buildToken, restricted, JWT_SECRET };
