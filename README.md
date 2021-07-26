@@ -1,22 +1,40 @@
-# Build Week Scaffolding for Node and PostgreSQL
+# Anywhere Fitness
 
-## Video Tutorial
+## Endpoints
+### Auth
+- POST /users/register  
+--> `{ username: 'joe', password: '1234pass' }`  
+<-- `{ username: "joe", user_id: 5 }`
+- POST /users/login  
+--> `{ username: 'joe', password: '1234pass' }`  
+<-- `{ message: "welcome, joe", token: "eyJhbGciOiJ..." }`
+  
+  
 
-The following tutorial explains how to set up this project using PostgreSQL and Heroku.
+All of the other routes will require the token received from login to return any data. Include the token as the http header, "Authorization." Certian data may be restricted by individual user as well. (For instance, GET /classes/2 might return different data depending on if the token belongs to the class instructor, a class attendee, or another user.)
 
-[![Setting up PostgreSQL for Build Week](https://img.youtube.com/vi/kTO_tf4L23I/maxresdefault.jpg)](https://www.youtube.com/watch?v=kTO_tf4L23I)
+### Classes
+- GET /classes
+- GET /classes/{class_id}
 
-## Requirements
-
-- [PostgreSQL, pgAdmin 4](https://www.postgresql.org/download/) and [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) installed in your local machine.
-- A Heroku app with the [Heroku PostgreSQL Addon](https://devcenter.heroku.com/articles/heroku-postgresql#provisioning-heroku-postgres) added to it.
-- Development and testing databases created with [pgAdmin 4](https://www.pgadmin.org/docs/pgadmin4/4.29/database_dialog.html).
-
-## Starting a New Project
-
-- Create a new repository using this template, and clone it to your local.
-- Create a `.env` file and follow the instructions inside `knexfile.js`.
-- Fix the scripts inside `package.json` to use your Heroku app.
+The end points are not all written yet, but expect the data to look like this:
+```
+  {
+    class_id: 1,  
+    class_name: 'Yoga with Lily',
+    class_time: 2021-07-31T01:00:00.000Z,
+    instructor_id: 2, 
+    instructor_name: 'Lily Lightwater'
+    activity_id: 2,
+    activity_name: 'yoga',
+    intensity: 'moderate',
+    address: '123 Yoga Lane, Sun Town, CA',
+    max_size: 12,
+    available_slots: 5,
+    created_at: 2021-07-26T18:37:48.347Z,
+    updated_at: 2021-07-26T18:37:48.347Z
+  }
+```
 
 ## Scripts
 
