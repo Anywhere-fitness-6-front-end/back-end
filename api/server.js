@@ -3,7 +3,9 @@ const helmet = require('helmet')
 const cors = require('cors')
 
 const usersRouter = require('./users/users-router')
+const classesRouter = require('./classes/classes-router')
 const { restricted } = require('./secure')
+const dbConfig = require('../data/db-config')
 
 // function getAllUsers() { return db('users') }
 
@@ -29,6 +31,7 @@ server.use(cors())
 // })
 
 server.use('/users', usersRouter)
+server.use('/classes', classesRouter)
 
 server.get('/test', restricted, (req, res) => {
   res.status(200).json({ message: "what's up" });
@@ -36,7 +39,12 @@ server.get('/test', restricted, (req, res) => {
 
 server.use((err, req, res, next) => {
   if (err) {
-    res.status(err[0]).json({ message: err[1] });
+    console.log(err);
+
+    if (Array.isArray(err) && err.length === 2)
+      res.status(err[0]).json({ message: err[1] });
+    else
+      res.status(500).json(err);
   }
   else {
     res.status(500).json({ message: "an error occured" });
@@ -44,3 +52,5 @@ server.use((err, req, res, next) => {
 })
 
 module.exports = server
+
+dbConfig('instructors').select().then(res => console.log(res))
