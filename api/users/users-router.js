@@ -1,12 +1,16 @@
 const express = require('express');
-const { buildToken, checkPassword } = require('../secure');
+const { buildToken, checkPassword, hash } = require('../secure');
 const { validateUser, verifyUsernameAvailable, verifyUserExists } = require('./users-middleware');
 const { addUser } = require('./users-model');
 
 const router = express.Router();
 
 router.post('/register', validateUser, verifyUsernameAvailable, async (req, res) => {
-	const user = await addUser(req.postedUser);
+	const newUser = {
+		username: req.postedUser.username,
+		password: hash(req.postedUser.password)
+	}
+	const user = await addUser(newUser);
 	return res.status(200).json(user);
 });
 
