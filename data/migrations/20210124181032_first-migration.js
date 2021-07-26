@@ -27,9 +27,8 @@ exports.up = async (knex) => {
       classes.dateTime('class_time').notNullable();
       classes.integer('duration').notNullable();
       classes.integer('instructor_id').notNullable();
-      //classes.integer('activity_id').references('activity_id').inTable('activities')
-      classes.text('activity_name').notNullable();
-      classes.enu('intensity', ['unspecified', 'easy', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, enumName: 'intensity_level' });
+      classes.integer('activity_id').references('activity_id').inTable('activities')
+      classes.enu('intensity', ['unspecified', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, enumName: 'intensity_level' });
       classes.text('address').notNullable();
       classes.integer('max_size').notNullable();
       classes.integer('available_slots').notNullable();
@@ -45,10 +44,10 @@ exports.up = async (knex) => {
 
 /** @param {import('knex').Knex} knex */
 exports.down = async (knex) => {
-  await knex.schema.dropTableIfExists('attendants');
-  await knex.schema.dropTableIfExists('classes');
-  await knex.schema.dropTableIfExists('activities');
-  await knex.schema.dropTableIfExists('instructors');
-  await knex.schema.dropTableIfExists('users');
+  await knex.schema.dropTableIfExists('attendants')
+  await knex.schema.dropTableIfExists('classes')
+  await knex.schema.dropTableIfExists('activities')
+  await knex.schema.dropTableIfExists('instructors')
+  await knex.schema.dropTableIfExists('users')
   await knex.schema.raw('drop type if exists intensity_level');
 }
