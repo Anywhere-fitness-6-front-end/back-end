@@ -7,7 +7,7 @@ async function getUser(username) {
 }
 
 async function addUser(user) {
-	const result = await db('users').insert(user, ['username', 'user_id', 'created_at']);
+	const [result] = await db('users').insert(user, ['username', 'user_id', 'created_at']);
 
 	// if (result)
 	// 	return await getUser(user.username);
