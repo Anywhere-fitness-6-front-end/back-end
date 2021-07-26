@@ -11,7 +11,7 @@ beforeAll(async () => {
   await db.migrate.latest();
 });
 beforeEach(async () => {
-  await db("users").truncate();
+  await db.seed.run('cleanup')
 });
 afterAll(async () => {
   await db.destroy();
