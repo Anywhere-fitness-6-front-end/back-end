@@ -7,12 +7,14 @@ async function getUser(username) {
 }
 
 async function addUser(user) {
-	const result = await db('users').insert(user);
+	const result = await db('users').insert(user, ['username', 'user_id', 'created_at']);
 
-	if (result)
-		return await getUser(user.username);
-	else
-		return null;
+	// if (result)
+	// 	return await getUser(user.username);
+	// else
+	// 	return null;
+
+	return result;
 }
 
 module.exports = { getUser, addUser };
