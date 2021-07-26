@@ -1,6 +1,6 @@
 const Users = require('./users-model');
 
-/** @type {express.RequestHandler} */
+/** @type {import('express').RequestHandler} */
 const validateUser = (req, res, next) => {
 	const { username, password } = req.body;
 
@@ -14,7 +14,7 @@ const validateUser = (req, res, next) => {
 	}
 };
 
-/** @type {express.RequestHandler} */
+/** @type {import('express').RequestHandler} */
 const verifyUserExists = async (req, res, next) => {
 	const user = await Users.getUser(req.postedUser.username);
 
@@ -28,7 +28,7 @@ const verifyUserExists = async (req, res, next) => {
 };
 
 
-/** @type {express.RequestHandler} */
+/** @type {import('express').RequestHandler} */
 const verifyUsernameAvailable = async (req, res, next) => {
 	const user = await Users.getUser(req.postedUser.username);
 
