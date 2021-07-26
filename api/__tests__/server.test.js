@@ -28,8 +28,8 @@ describe("server.js", () => {
 });
 
 describe("Verify Endpoints are working", () => {
-  describe("/users/register", () => {
-    it("[POST] creates new User", async () => {
+  describe("[POST] /users/register", () => {
+    it("creates new User", async () => {
       const newUser = await request(server)
         .post("/users/register")
         .send(randomUser)
@@ -41,7 +41,7 @@ describe("Verify Endpoints are working", () => {
         .first();
       expect(user);
     });
-    it("[POST] updates database", async () => {
+    it("updates database", async () => {
       const newUser = await request(server)
         .post("/users/register")
         .send(randomUser)
@@ -54,8 +54,8 @@ describe("Verify Endpoints are working", () => {
       expect(user.username).toBe(randomUser.username);
     });
   });
-  describe("/users/login", () => {
-    it("[POST] returns valid token", async () => {
+  describe("[POST] /users/login", () => {
+    it("returns valid token", async () => {
       await request(server)
         .post("/users/register")
         .send(randomUser)
@@ -68,7 +68,7 @@ describe("Verify Endpoints are working", () => {
         .then((res) => res.body.token);
       expect(jwt.verify(token, JWT_SECRET)).toBeDefined();
     });
-    it("[POST] fails without password", async () => {
+    it("fails without password", async () => {
       const response = await request(server)
         .post("/users/login")
         .send({ username: "test" })
