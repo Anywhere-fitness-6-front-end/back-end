@@ -18,6 +18,9 @@ All of the other routes will require the token received from login to return any
 ### Classes
 - GET /classes
 - GET /classes/{class_id}
+- POST /classes
+- PUT /classes/{class_id}
+- DELETE /classes/{class_id}
 
 The end points are not all written yet, but expect the data to look like this:
 ```
