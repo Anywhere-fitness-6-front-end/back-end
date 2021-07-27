@@ -14,21 +14,23 @@ exports.up = async (knex) => {
       instructors.integer('user_id').references('user_id').inTable('users');
     })
 
-    .createTable('activities', (activities) => {
-      activities.increments('activity_id');
-      activities.text('activity_name');
-    })
+    // .createTable('activities', (activities) => {
+    //   activities.increments('activity_id');
+    //   activities.text('activity_name');
+    // })
 
     .createTable('classes', (classes) => {
       classes.increments('class_id');
       classes.string('class_name').notNullable();
       classes.dateTime('class_time').notNullable();
+      classes.integer('duration').notNullable();
       classes.integer('instructor_id').notNullable();
-      classes.integer('activity_id').references('activity_id').inTable('activities')
-      classes.enu('intensity', ['unspecified', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, enumName: 'intensity_level' });
+      //classes.integer('activity_id').references('activity_id').inTable('activities')
+      classes.text('activity_name').notNullable();
+      classes.enu('intensity', ['unspecified', 'easy', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, enumName: 'intensity_level' });
       classes.text('address').notNullable();
-      classes.integer('max_size');
-      classes.integer('attending').notNullable().defaultTo(0);
+      classes.integer('max_size').notNullable();
+      classes.integer('available_slots').notNullable();
       classes.timestamps(false, true);
     })
 

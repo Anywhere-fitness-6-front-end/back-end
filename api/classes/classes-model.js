@@ -1,18 +1,33 @@
 const db = require('../../data/db-config');
 
+/*
+ This is the shape the front end team is using:
+
+ {
+	"class_name": "spin class",
+	* "instructor_name": "bailey",
+	"activity_name": "cycling",
+	"address": "123 Yoga Lane, Sun Town, CA",
+	"class_time": "2021-07-31T01:01:00.000z",
+	"duration": 5,
+	"intensity": "easy",
+	"max_size": 10,
+	* "available_slots": 15
+}
+
+*/
+
 async function getAll() {
 	return await db('classes')
 		.join('instructors', 'classes.instructor_id', 'instructors.instructor_id')
-		.join('activities', 'classes.activity_id', 'activities.activity_id')
-		.select('classes.*', 'instructors.instructor_name', 'activities.activity_name')
+		.select('classes.*', 'instructors.instructor_name')
 }
 
 async function getById(class_id, user_id) {
 	const result = await db('classes')
 		.join('instructors', 'classes.instructor_id', 'instructors.instructor_id')
-		.join('activities', 'classes.activity_id', 'activities.activity_id')
 		.where({ class_id })
-		.select('classes.*', 'instructors.instructor_name', 'instructors.user_id as inst_user_id', 'activities.activity_name').first()
+		.select('classes.*', 'instructors.instructor_name', 'instructors.user_id as inst_user_id').first()
 
 	if (!result)
 		return null;

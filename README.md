@@ -16,31 +16,46 @@ API URL: https://infinite-anchorage-25635.herokuapp.com/
 All of the other routes will require the token received from login to return any data. Include the token as the http header, "Authorization." Certian data may be restricted by individual user as well. (For instance, GET /classes/2 might return different data depending on if the token belongs to the class instructor, a class attendee, or another user.)
 
 ### Classes
-- GET /classes
-- GET /classes/{class_id}
-- POST /classes
-- PUT /classes/{class_id}
-- DELETE /classes/{class_id}
+|method|path|receives|returns|
+| ---| ---|---|---|
+|GET|   /classes| | a list of all the classes |
+|GET|   /classes/{class_id}| | information about the specified class |
+|POST|  /classes | a class object | the newly created class
+|PUT|   /classes/{class_id} | a class object | the newly updated class
+|DELETE|/classes/{class_id} | | the deleted class
 
-The end points are not all written yet, but expect the data to look like this:
+To submit a new class, the following is required:
 ```
   {
-    class_id: 1,  
-    class_name: 'Yoga with Lily',
-    class_time: 2021-07-31T01:00:00.000Z,
-    instructor_id: 2, 
-    instructor_name: 'Lily Lightwater'
-    activity_id: 2,
-    activity_name: 'yoga',
-    intensity: 'moderate',
-    address: '123 Yoga Lane, Sun Town, CA',
-    max_size: 12,
-    available_slots: 5,
-    created_at: 2021-07-26T18:37:48.347Z,
-    updated_at: 2021-07-26T18:37:48.347Z
+    "class_name": "Yoga with Lily",
+    "class_time": "2021-07-31T01:00:00.000Z",
+    "duration": 90,
+    "activity_name": "yoga",
+    "intensity": "moderate",
+    "address": "123 Yoga Lane, Sun Town, CA",
+    "max_size": 12,
   }
 ```
 
+When requesting information about a class, you'll receive the following:
+```
+{
+    "class_id": 4,
+    "class_name": "Yoga with Lily",
+    "class_time": "2021-07-31T01:00:00.000Z",
+    "duration": 90,
+    "instructor_id": 1,
+    "activity_name": "yoga",
+    "intensity": "moderate",
+    "address": "123 Yoga Lane, Sun Town, CA",
+    "max_size": 12,
+    "available_slots": 12,
+    "created_at": "2021-07-27T20:35:11.049Z",
+    "updated_at": "2021-07-27T20:35:11.049Z",
+    "instructor_name": "Max \"The Ripper\" Beefstack",
+    "attending": []
+}
+```
 ## Scripts
 
 - **start**: Runs the app in production.
