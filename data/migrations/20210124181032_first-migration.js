@@ -3,16 +3,18 @@ exports.up = async (knex) => {
   await knex.schema
     .createTable('users', (users) => {
       users.increments('user_id');
-      users.string('username', 40).notNullable().unique();
+      users.string('email', 60).notNullable().unique();
       users.string('password', 60).notNullable();
+      users.string('name', 60).notNullable();
+      users.boolean('instructor').notNullable().defaultTo(false);
       users.timestamps(false, true);
     })
 
-    .createTable('instructors', (instructors) => {
-      instructors.increments('instructor_id');
-      instructors.string('instructor_name');
-      instructors.integer('user_id').references('user_id').inTable('users');
-    })
+    // .createTable('instructors', (instructors) => {
+    //   instructors.increments('instructor_id');
+    //   instructors.string('instructor_name');
+    //   instructors.integer('user_id').references('user_id').inTable('users');
+    // })
 
     // .createTable('activities', (activities) => {
     //   activities.increments('activity_id');

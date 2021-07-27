@@ -18,16 +18,14 @@ const db = require('../../data/db-config');
 */
 
 async function getAll() {
-	return await db('classes')
-		.join('instructors', 'classes.instructor_id', 'instructors.instructor_id')
-		.select('classes.*', 'instructors.instructor_name')
+	return await db('classes').select();
 }
 
 async function getById(class_id, user_id) {
 	const result = await db('classes')
-		.join('instructors', 'classes.instructor_id', 'instructors.instructor_id')
-		.where({ class_id })
-		.select('classes.*', 'instructors.instructor_name', 'instructors.user_id as inst_user_id').first()
+	.where({ class_id })
+		.join('users', 'classes.instructor_id', 'users.user_id')
+		.select('classes.*', 'users.name as instructor_name').first()
 
 	if (!result)
 		return null;
@@ -35,7 +33,7 @@ async function getById(class_id, user_id) {
 	const attending = await db('attendants')
 		.join('users', 'attendants.user_id', 'users.user_id')
 		.where('attendants.class_id', class_id)
-		.select('users.username', 'users.user_id');
+		.select('users.name', 'users.user_id');
 
 	// this means the instructor is requesting the class info, so we can include
 	// the list of attendants

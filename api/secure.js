@@ -14,7 +14,9 @@ function checkPassword(password, hash) {
 function buildToken(user) {
 	const payload = {
 		user_id: user.user_id,
-		username: user.username,
+		email: user.email,
+		instructor: user.instructor,
+		name: user.name,
 	}
 
 	const options = {
@@ -45,7 +47,6 @@ async function restricted(req, res, next) {
 
 	if (decodedToken) {
 		req.token = decodedToken;
-		console.log(req.token)
 		return next();
 	}
 	else {

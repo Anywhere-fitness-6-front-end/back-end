@@ -1,5 +1,4 @@
 const express = require('express');
-const { checkInstructor } = require('../instructors/instructors-middleware');
 const { restricted } = require('../secure');
 const { validateClass } = require('./classes-middleware');
 const Classes = require('./classes-model');
@@ -46,7 +45,7 @@ router.get('/:id', restricted, (req, res, next) => {
 	);
 });
 
-router.post('/', checkInstructor, validateClass, (req, res, next) => {
+router.post('/', validateClass, (req, res, next) => {
 	Classes.add(req.newClass).then(
 		result => {
 			res.status(201).json(result);
