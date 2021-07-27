@@ -1,5 +1,7 @@
 # Anywhere Fitness
 
+API URL: https://infinite-anchorage-25635.herokuapp.com/
+
 ## Endpoints
 ### Auth
 - POST /users/register  
