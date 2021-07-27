@@ -28,6 +28,7 @@ exports.up = async (knex) => {
       classes.enu('intensity', ['unspecified', 'light', 'moderate', 'intense', 'brutal'], { useNative: true, enumName: 'intensity_level' });
       classes.text('address').notNullable();
       classes.integer('max_size');
+      classes.integer('attending').notNullable().defaultTo(0);
       classes.timestamps(false, true);
     })
 

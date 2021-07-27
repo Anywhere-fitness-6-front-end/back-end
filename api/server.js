@@ -4,8 +4,10 @@ const cors = require('cors')
 
 const usersRouter = require('./users/users-router')
 const classesRouter = require('./classes/classes-router')
+const activitiesRouter = require('./activities/activities-router')
 const { restricted } = require('./secure')
-const dbConfig = require('../data/db-config')
+const db = require('../data/db-config')
+const { add } = require('./classes/classes-model')
 
 // function getAllUsers() { return db('users') }
 
@@ -31,7 +33,8 @@ server.use(cors())
 // })
 
 server.use('/users', usersRouter)
-server.use('/classes', classesRouter)
+server.use('/classes', restricted, classesRouter)
+server.use('/activities', restricted, activitiesRouter)
 
 server.get('/test', restricted, (req, res) => {
   res.status(200).json({ message: "what's up" });
@@ -52,5 +55,3 @@ server.use((err, req, res, next) => {
 })
 
 module.exports = server
-
-dbConfig('instructors').select().then(res => console.log(res))

@@ -14,6 +14,9 @@ async function getById(class_id, user_id) {
 		.where({ class_id })
 		.select('classes.*', 'instructors.instructor_name', 'instructors.user_id as inst_user_id', 'activities.activity_name').first()
 
+	if (!result)
+		return null;
+
 	const attending = await db('attendants')
 		.join('users', 'attendants.user_id', 'users.user_id')
 		.where('attendants.class_id', class_id)
@@ -21,7 +24,7 @@ async function getById(class_id, user_id) {
 
 	// this means the instructor is requesting the class info, so we can include
 	// the list of attendants
-	if (result.inst_user_id === user_id) {
+	if (result.inst_user_id === user_id || user_id === true) {
 		result.attending = attending;
 	}
 	// if it's not the instructor, don't include the list of attending
@@ -38,7 +41,28 @@ async function getById(class_id, user_id) {
 	return result;
 }
 
+async function add(classInfo) {
+	const result = await db('classes').insert(classInfo, 'class_id');
+	console.log(result)
+
+	const newClass = getById(result[0], true)
+	return newClass;
+}
+
+async function update(class_id, classInfo) {
+	const result = await db('classes').where({ class_id }).update(classInfo);
+	return result;
+}
+
+async function remove(class_id) {
+	const result = await db('classes').where({ class_id }).delete();
+	return result;
+}
+
 module.exports = {
 	getAll,
-	getById
+	getById,
+	add,
+	update,
+	remove,
 }

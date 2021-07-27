@@ -45,6 +45,7 @@ async function restricted(req, res, next) {
 
 	if (decodedToken) {
 		req.token = decodedToken;
+		console.log(req.token)
 		return next();
 	}
 	else {
