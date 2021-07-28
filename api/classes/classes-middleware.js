@@ -14,7 +14,7 @@ const validateClass = (req, res, next) => {
 		address,
 		max_size,
 		available_slots: max_size,
-		instructor_id: req.instructor.instructor_id
+		instructor_id: req.token.user_id
 	}
 
 	req.newClass = newClass;

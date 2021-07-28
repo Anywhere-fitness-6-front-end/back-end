@@ -1,13 +1,13 @@
 const db = require('../../data/db-config')
 
-async function getUser(username) {
-	const result = await db('users').where({ username }).select().first();
+async function getUser(email) {
+	const result = await db('users').where({ email }).select().first();
 
 	return result;
 }
 
 async function addUser(user) {
-	const [result] = await db('users').insert(user, ['username', 'user_id', 'created_at']);
+	const [result] = await db('users').insert(user, "*");
 
 	// if (result)
 	// 	return await getUser(user.username);

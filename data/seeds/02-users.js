@@ -7,10 +7,10 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex('users').insert([
-        { username: 'test user', password: hash('testpass') },
-        { username: 'maxbeef', password: hash('ilovedandelions') },
-        { username: 'lilylilw', password: hash('show me the beef') },
-        { username: 'fitness fan', password: hash('password') }
+        { name: 'Test User', instructor: false, email: 'test@user.com', password: hash('testpass') },
+        { name: 'Max Beefstack', instructor: true, email: 'maxbeef@email.com', password: hash('ilovedandelions') },
+        { name: 'Lily Water Lily', instructor: true, email: 'lilylilw@email.com', password: hash('show me the beef') },
+        { name: 'Jon Doe', instructor: false, email: 'fitnessfan@email.com', password: hash('password') }
       ]);
     });
 };
