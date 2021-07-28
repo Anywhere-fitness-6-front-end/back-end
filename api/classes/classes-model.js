@@ -62,6 +62,16 @@ async function remove(class_id) {
 	return result;
 }
 
+async function addMember(class_id, user_id) {
+	const result = await db('attendants').insert({class_id, user_id})
+	return result;
+}
+
+async function removeMember(class_id, user_id) {
+	const result = await db('attendants').where({class_id, user_id}).del();
+  return result;
+}
+
 async function changeAvailability(class_id, n) {
 	const result = await db('classes').where({ class_id }).increment('available_slots', n);
 	return result;
@@ -73,5 +83,7 @@ module.exports = {
 	add,
 	update,
 	remove,
+	addMember,
+	removeMember
 	changeAvailability,
 }

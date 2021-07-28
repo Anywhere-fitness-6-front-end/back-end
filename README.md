@@ -3,28 +3,33 @@
 API URL: https://infinite-anchorage-25635.herokuapp.com/
 
 ## Endpoints
+
 ### Auth
+
 - POST /users/register  
---> `{ username: 'joe', password: '1234pass' }`  
-<-- `{ username: "joe", user_id: 5 }`
+  --> `{ username: 'joe', password: '1234pass' }`  
+  <-- `{ username: "joe", user_id: 5 }`
 - POST /users/login  
---> `{ username: 'joe', password: '1234pass' }`  
-<-- `{ message: "welcome, joe", token: "eyJhbGciOiJ..." }`
-  
-  
+  --> `{ username: 'joe', password: '1234pass' }`  
+  <-- `{ message: "welcome, joe", token: "eyJhbGciOiJ..." }`
 
 All of the other routes will require the token received from login to return any data. Include the token as the http header, "Authorization." Certian data may be restricted by individual user as well. (For instance, GET /classes/2 might return different data depending on if the token belongs to the class instructor, a class attendee, or another user.)
 
 ### Classes
-|method|path|receives|returns|
-| ---| ---|---|---|
-|GET|   /classes| | a list of all the classes |
-|GET|   /classes/{class_id}| | information about the specified class |
-|POST|  /classes | a class object | the newly created class
-|PUT|   /classes/{class_id} | a class object | the newly updated class
-|DELETE|/classes/{class_id} | | the deleted class
+
+| method | path                       | receives       | returns                                                      |
+| ------ | -------------------------- | -------------- | ------------------------------------------------------------ |
+| GET    | /classes                   |                | a list of all the classes                                    |
+| GET    | /classes/{class_id}        |                | information about the specified class                        |
+| POST   | /classes                   | a class object | the newly created class                                      |
+| PUT    | /classes/{class_id}        | a class object | the newly updated class                                      |
+| DELETE | /classes/{class_id}        |                | the deleted class                                            |
+| GET    | /classes/enroll/{class_id} |                | a class object & for instructors one with attending members. |
+| POST   | /classes/enroll/{class_id} |                | successful message object                                    |
+| DELETE | /classes/enroll{class_id}  |                | successful message object                                    |
 
 To submit a new class, the following is required:
+
 ```
   {
     "class_name": "Yoga with Lily",
@@ -38,6 +43,7 @@ To submit a new class, the following is required:
 ```
 
 When requesting information about a class, you'll receive the following:
+
 ```
 {
     "class_id": 4,
@@ -56,6 +62,7 @@ When requesting information about a class, you'll receive the following:
     "attending": []
 }
 ```
+
 ## Scripts
 
 - **start**: Runs the app in production.
