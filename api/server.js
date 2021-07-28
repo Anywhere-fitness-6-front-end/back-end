@@ -5,6 +5,7 @@ const cors = require('cors')
 const usersRouter = require('./users/users-router')
 const classesRouter = require('./classes/classes-router')
 const { restricted } = require('./secure')
+const enrollRouter = require('./classes/enroll-router')
 
 // function getAllUsers() { return db('users') }
 
@@ -29,6 +30,7 @@ server.use(cors())
 //   res.status(201).json(await insertUser(req.body))
 // })
 
+server.use('/classes/enroll', restricted, enrollRouter)
 server.use('/users', usersRouter)
 server.use('/classes', restricted, classesRouter)
 

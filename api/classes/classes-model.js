@@ -37,7 +37,7 @@ async function getById(class_id, user_id) {
 
 	// this means the instructor is requesting the class info, so we can include
 	// the list of attendants
-	if (result.inst_user_id === user_id || user_id === true) {
+	if (result.instructor_id === user_id ) {
 		result.attending = attending;
 	}
 	// if it's not the instructor, don't include the list of attending

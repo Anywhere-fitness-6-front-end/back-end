@@ -31,4 +31,4 @@ const verifyClassExists = async (req, res, next) => {
 	}
 }
 
-module.exports = { validateClass };
+module.exports = { validateClass, verifyClassExists };
