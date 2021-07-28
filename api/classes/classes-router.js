@@ -54,7 +54,15 @@ router.post('/', validateClass, (req, res, next) => {
 	)
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
+	const original = await Classes.getById(req.params.id, req.token.user_id);
+	if (!original) {
+		return next([404, "not found"]);
+	}
+	if (original.instructor_id !== req.token.user_id) {
+		return next([400, "That's not your class"]);
+	}
+
 	const upd = {};
 
 	if (req.body.class_name)
