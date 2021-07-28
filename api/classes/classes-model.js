@@ -77,11 +77,17 @@ async function addMember(class_id, user_id) {
 	return result;
 }
 
+async function removeMember(class_id, user_id) {
+	const result = await db('attendants').where({class_id, user_id}).del();
+	return result;
+}
+
 module.exports = {
 	getAll,
 	getById,
 	add,
 	update,
 	remove,
-	addMember
+	addMember,
+	removeMember
 }
