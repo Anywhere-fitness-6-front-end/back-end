@@ -1,3 +1,4 @@
+const db = require('../../data/db-config');
 const Classes = require('./classes-model')
 
 /** @type {express.RequestHandler} */
@@ -31,4 +32,15 @@ const verifyClassExists = async (req, res, next) => {
 	}
 }
 
-module.exports = { validateClass, verifyClassExists };
+
+/** @type {express.RequestHandler} */
+const verifyNotEnrolled = async (req, res, next) => {
+	const enrolled = await db('attendants').where({user_id: req.token.user_id, class_id: req.params.class_id}).select().first();
+	if (enrolled) {
+		next({status: 400, message: `User is already enrolled for class`, class_id: req.params.class_id, user_id: req.token.user_id })
+	} else {
+		next()
+	}
+}
+
+module.exports = { validateClass, verifyClassExists, verifyNotEnrolled };
