@@ -84,6 +84,6 @@ module.exports = {
 	update,
 	remove,
 	addMember,
-	removeMember
+	removeMember,
 	changeAvailability,
 }
