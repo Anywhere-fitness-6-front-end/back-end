@@ -30,7 +30,7 @@ All of the other routes will require the token received from login to return any
 
 To submit a new class, the following is required:
 
-```
+```js
   {
     "class_name": "Yoga with Lily",
     "class_time": "2021-07-31T01:00:00.000Z",
@@ -44,7 +44,7 @@ To submit a new class, the following is required:
 
 When requesting information about a class, you'll receive the following:
 
-```
+```js
 {
     "class_id": 4,
     "class_name": "Yoga with Lily",
@@ -59,7 +59,7 @@ When requesting information about a class, you'll receive the following:
     "created_at": "2021-07-27T20:35:11.049Z",
     "updated_at": "2021-07-27T20:35:11.049Z",
     "instructor_name": "Max \"The Ripper\" Beefstack",
-    "attending": []
+    "attending": [] // Worth nothing this is only available for instructors.
 }
 ```
 
