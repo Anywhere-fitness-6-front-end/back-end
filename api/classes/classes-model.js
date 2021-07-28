@@ -74,6 +74,7 @@ async function remove(class_id) {
 
 async function addMember(class_id, user_id) {
 	const result = await db('attendants').insert({class_id, user_id})
+	return result;
 }
 
 module.exports = {
