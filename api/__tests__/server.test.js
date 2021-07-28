@@ -4,7 +4,7 @@ const db = require("../../data/db-config");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../secure");
-const randomUser = { username: "user", password: "pass1234" };
+const randomUser = { email: "user@user.user", password: "pass1234", name: "joe user", instructor: false };
 
 beforeAll(async () => {
   await db.migrate.rollback();
@@ -35,7 +35,7 @@ describe("Verify Endpoints are working", () => {
         .send(randomUser)
         .expect(201)
         .then((res) => res.body);
-      console.log(newUser);
+      // console.log(newUser);
       const user = await db("users")
         .where({ user_id: newUser.user_id })
         .first();
@@ -74,7 +74,7 @@ describe("Verify Endpoints are working", () => {
         .send({ username: "test" })
         .expect(400);
       expect(response.body.message).toBe(
-        "username (min 3 chars) and password (min 8 chars) are required"
+        "email and password are required"
       );
     });
   });

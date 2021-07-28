@@ -33,8 +33,8 @@ async function getById(class_id, user_id) {
 
 	// this means the instructor is requesting the class info, so we can include
 	// the list of attendants
-	if (result.inst_user_id === user_id || user_id === true) {
-		result.enrolled = await Enroll.getEnrolled();
+	if (result.instructor_id === user_id) {
+		result.enrolled = await Enroll.getEnrolled(class_id);
 	}
 	// if it's not the instructor, don't include the list of attending
 	// but show whether or not the requesting user is enrolled
@@ -47,15 +47,14 @@ async function getById(class_id, user_id) {
 
 async function add(classInfo) {
 	const result = await db('classes').insert(classInfo, 'class_id');
-	console.log(result)
 
-	const newClass = getById(result[0], true)
+	const newClass = getById(result[0], classInfo.instructor_id)
 	return newClass;
 }
 
 async function update(class_id, classInfo) {
-	const result = await db('classes').where({ class_id }).update(classInfo);
-	return result;
+	const result = await db('classes').where({ class_id }).update(classInfo, "*");
+	return result[0];
 }
 
 async function remove(class_id) {
