@@ -30,8 +30,8 @@ router.post('/:class_id', verifyClassExists, verifyNotEnrolled, async (req, res,
 
 router.delete('/:class_id', verifyClassExists, async (req, res, next) => {
     try {
-        const x = await Classes.removeMember(req.params.class_id, req.token.user_id);
-        if (x) {
+        const deleted = await Classes.removeMember(req.params.class_id, req.token.user_id);
+        if (deleted) {
             res.json({message: "Successfully removed user from class."})
         } else  {
             next({status: 404, message: "user not enrolled in class"})
