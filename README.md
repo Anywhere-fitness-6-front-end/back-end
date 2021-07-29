@@ -63,7 +63,7 @@ When requesting information about a class, you'll receive the following:
 }
 ```
 
-For managing a user's enrollment in a class, you can use the /enroll/{class_id} endpoint. GET returns true or false if the user is registered, POST registers the user for the class, and DELETE de-registers. No need for any request body here - the class_id is in the url and the user_id is in the token.
+For managing a user's enrollment in a class, you can use the /enroll/{class_id} endpoint. GET returns an object with `"enrolled": true || false` if the user is registered, POST registers the user for the class, and DELETE de-registers. No need for any request body here - the class_id is in the url and the user_id is in the token.
 
 Currently GET returns the full list of attendees for a class if requested by a user that is also an instructor. That will updated soon so only the class's actual instructor can get that list - any other instructor would just get true or false.
 
