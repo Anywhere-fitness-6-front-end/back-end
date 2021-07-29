@@ -28,6 +28,7 @@ const verifyClassExists = async (req, res, next) => {
 	if (!existing) {
 		next({status: 404, message: `Class not found`, class_id: req.params.class_id, user_id: req.token.user_id })
 	} else {
+		req.available_slots = existing.available_slots;
 		next()
 	}
 }
