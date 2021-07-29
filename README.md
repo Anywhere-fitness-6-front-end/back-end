@@ -26,7 +26,7 @@ All of the other routes will require the token received from login to return any
 | DELETE | /classes/{class_id}        |                | the deleted class                                            |
 | GET    | /enroll/{class_id}         |                | a class object & for instructors one with attending members. |
 | POST   | /enroll/{class_id}         |                | successful message object                                    |
-| DELETE | /enroll{class_id}          |                | successful message object                                    |
+| DELETE | /enroll/{class_id}         |                | successful message object                                    |
 
 To submit a new class, the following is required:
 
