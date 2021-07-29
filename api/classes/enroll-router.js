@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/:class_id', verifyClassExists, async (req, res, next) => {
     try {
             const result = await Classes.getById(req.params.class_id, req.token.user_id);
-            res.json(result);
+            res.json(result.enrolled ? true : false);
         } catch (error) {
             next({status: 500, message: "internal server error", error})
     } 
