@@ -24,9 +24,9 @@ All of the other routes will require the token received from login to return any
 | POST   | /classes                   | a class object | the newly created class                                      |
 | PUT    | /classes/{class_id}        | a class object | the newly updated class                                      |
 | DELETE | /classes/{class_id}        |                | the deleted class                                            |
-| GET    | /classes/enroll/{class_id} |                | a class object & for instructors one with attending members. |
-| POST   | /classes/enroll/{class_id} |                | successful message object                                    |
-| DELETE | /classes/enroll{class_id}  |                | successful message object                                    |
+| GET    | /enroll/{class_id}         |                | a class object & for instructors one with attending members. |
+| POST   | /enroll/{class_id}         |                | successful message object                                    |
+| DELETE | /enroll{class_id}          |                | successful message object                                    |
 
 To submit a new class, the following is required:
 
