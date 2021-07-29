@@ -1,5 +1,7 @@
 # Anywhere Fitness
 
+This is the repo for the back end of Anywhere Fitness, a Lambda School Build Week project that enables fitness instructors to organize classes, and allows fitness enthusiasts to browse, view, and enroll in those classes.
+
 API URL: https://infinite-anchorage-25635.herokuapp.com/
 
 ## Endpoints
@@ -7,10 +9,10 @@ API URL: https://infinite-anchorage-25635.herokuapp.com/
 ### Auth
 
 - POST /users/register  
-  --> `{ username: 'joe', password: '1234pass' }`  
-  <-- `{ username: "joe", user_id: 5 }`
+  --> `{ email: 'joe@email.com', password: '1234pass', name: 'Joe Smith', instructor: false }`  
+  <-- `{ email: 'joe@email.com', name: 'Joe Smith', instructor: false, user_id: 5 }`
 - POST /users/login  
-  --> `{ username: 'joe', password: '1234pass' }`  
+  --> `{ email: 'joe@email.com', password: '1234pass' }`  
   <-- `{ message: "welcome, joe", token: "eyJhbGciOiJ..." }`
 
 All of the other routes will require the token received from login to return any data. Include the token as the http header, "Authorization." Certian data may be restricted by individual user as well. (For instance, GET /classes/2 might return different data depending on if the token belongs to the class instructor, a class attendee, or another user.)
@@ -33,7 +35,7 @@ To submit a new class, the following is required:
 ```js
   {
     "class_name": "Yoga with Lily",
-    "class_time": "2021-07-31T01:00:00.000Z",
+    "class_time": "2021-07-31T08:00:00",
     "duration": 90,
     "activity_name": "yoga",
     "intensity": "moderate",
@@ -48,7 +50,7 @@ When requesting information about a class, you'll receive the following:
 {
     "class_id": 4,
     "class_name": "Yoga with Lily",
-    "class_time": "2021-07-31T01:00:00.000Z",
+    "class_time": "2021-07-31T08:00:00",
     "duration": 90,
     "instructor_id": 1,
     "activity_name": "yoga",
@@ -67,6 +69,12 @@ For managing a user's enrollment in a class, you can use the /enroll/{class_id} 
 
 Currently GET returns the full list of attendees for a class if requested by a user that is also an instructor. That will updated soon so only the class's actual instructor can get that list - any other instructor would just get true or false.
 
+## Installing Locally
+- Clone the repo and cd into the directory
+- `npm install`
+- You will also need postgresql running localling
+- create a .env file, using .env.default as a template, updated with the correct urls for your local postgres
+
 ## Scripts
 
 - **start**: Runs the app in production.
@@ -83,27 +91,3 @@ Currently GET returns the full list of attendees for a class if requested by a u
 - **rollbackh**: Rolls back migrations in the Heroku database.
 - **databaseh**: Interact with the Heroku database from the command line using psql.
 - **seedh**: Runs all seeds in the Heroku database.
-
-## Hot Tips
-
-- Figure out the connection to the database and deployment before writing any code.
-
-- If you need to make changes to a migration file that has already been released to Heroku, follow this sequence:
-
-  1. Roll back migrations in the Heroku database
-  2. Deploy the latest code to Heroku
-  3. Migrate the Heroku database to the latest
-
-- If your frontend devs are clear on the shape of the data they need, you can quickly build provisional endpoints that return mock data. They shouldn't have to wait for you to build the entire backend.
-
-- Keep your endpoints super lean: the bulk of the code belongs inside models and other middlewares.
-
-- Validating and sanitizing client data using a library is much less work than doing it manually.
-
-- Revealing crash messages to clients is a security risk, but during development it's helpful if your frontend devs are able to tell you what crashed.
-
-- PostgreSQL comes with [fantastic built-in functions](https://hashrocket.com/blog/posts/faster-json-generation-with-postgresql) for hammering rows into whatever JSON shape.
-
-- If you want to edit a migration that has already been released but don't want to lose all the data, make a new migration instead. This is a more realistic flow for production apps: prod databases are never migrated down. We can migrate Heroku down freely only because there's no valuable data from customers in it. In this sense, Heroku is acting more like a staging environment than production.
-
-- If your fronted devs are interested in running the API locally, help them set up PostgreSQL & pgAdmin in their machines, and teach them how to run migrations in their local. This empowers them to (1) help you troubleshoot bugs, (2) obtain the latest code by simply doing `git pull` and (3) work with their own data, without it being wiped every time you roll back the Heroku db. Collaboration is more fun and direct, and you don't need to deploy as often.
