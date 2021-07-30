@@ -55,10 +55,21 @@ describe('user can check enrollment in a class, enroll in a class, and un-enroll
 		expect(result.status).toBe(200);
 		expect(result.body.message).toMatch(/successfully removed user from class/i);
 	})
+	it('it gets an error if not enrolled', async () => {
+		const result = await request(server).delete('/enroll/1').set('Authorization', token);
+		expect(result.status).toBe(409);
+		expect(result.body.message).toMatch(/already not enrolled/i);
+		console.log(result.body);
+	})
 	it('it can enroll', async () => {
 		const result = await request(server).post('/enroll/1').set('Authorization', token);
 		expect(result.status).toBe(201);
 		expect(result.body.message).toMatch(/successfully added user to class/i);
 		console.log(result.body);
 	})
-});
+	it('it gets an error if already enrolled', async () => {
+		const result = await request(server).post('/enroll/1').set('Authorization', token);
+		expect(result.status).toBe(409);
+		expect(result.body.message).toMatch(/already enrolled/i);
+	})
+})
