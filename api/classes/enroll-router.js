@@ -11,18 +11,22 @@ const router = express.Router();
 router.get('/:class_id', verifyClassExists, async (req, res, next) => {
     try {
             const result = await Classes.getById(req.params.class_id, req.token.user_id);
-            res.json(result);
+            res.json(result.enrolled ? true : false);
         } catch (error) {
             next({status: 500, message: "internal server error", error})
     } 
 
 });
 
-// Not sure what I'm supposed to be doing here.
 router.post('/:class_id', verifyClassExists, verifyNotEnrolled, async (req, res, next) => {
     try{
-        await Classes.addMember(req.params.class_id, req.token.user_id)
-        res.json({message: "Successfully added user to class."})
+        if (req.available_slots > 0) {
+            await Classes.addMember(req.params.class_id, req.token.user_id)
+            await Classes.changeAvailability(req.params.class_id, -1)
+            res.json({message: "Successfully added user to class."})
+        } else {
+            next({status: 400})
+        }
     } catch (error) {
         next({status: 500, message: "internal server error", error})
     }
@@ -32,9 +36,10 @@ router.delete('/:class_id', verifyClassExists, async (req, res, next) => {
     try {
         const deleted = await Classes.removeMember(req.params.class_id, req.token.user_id);
         if (deleted) {
+            await Classes.changeAvailability(req.params.class_id, 1)
             res.json({message: "Successfully removed user from class."})
         } else  {
-            next({status: 404, message: "user not enrolled in class"})
+            next({status: 404, message: "User already not enrolled in class"})
         }
     } catch (error) {
         next({status: 500, message: "internal server error", error})
