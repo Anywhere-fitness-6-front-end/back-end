@@ -19,20 +19,6 @@ const newClass = {
 	"max_size": 12
 }
 
-const receivedClass = {
-	class_id: 2,
-	class_name: 'Stack That Beef',
-	class_time: '2021-07-31T01:00:00.000Z',
-	duration: 90,
-	instructor_id: 2,
-	activity_name: 'Weight Lifting',
-	intensity: 'intense',
-	address: '123 Address Lane, Beefo, CA',
-	max_size: 12,
-	available_slots: 12,
-	instructor_name: 'Max Beefstack',
-}
-
 let token;
 
 
@@ -52,7 +38,19 @@ describe('instructor can log in, post a new class, update that class, and delete
 	it('can post a new class', async () => {
 		const result = await request(server).post('/classes').set('Authorization', token).send(newClass);
 		expect(result.status).toBe(201);
-		expect(result.body).toMatchObject(receivedClass);
+		const cb = result.body;
+		expect(cb).toHaveProperty("class_id", 2)
+		expect(cb).toHaveProperty("class_name")
+		expect(cb).toHaveProperty("class_time")
+		expect(cb).toHaveProperty("duration")
+		expect(cb).toHaveProperty("instructor_id")
+		expect(cb).toHaveProperty("activity_name")
+		expect(cb).toHaveProperty("intensity")
+		expect(cb).toHaveProperty("address")
+		expect(cb).toHaveProperty("max_size")
+		expect(cb).toHaveProperty("available_slots")
+		expect(cb).toHaveProperty("instructor_name")
+		expect(cb).toHaveProperty("enrolled")
 	})
 	it('can update that class', async () => {
 		const upd = { ...newClass, class_name: 'Just Beef!' }

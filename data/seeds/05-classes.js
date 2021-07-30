@@ -10,7 +10,7 @@ exports.seed = function (knex) {
           class_time: '2021-07-31T01:00:00.000Z',
           duration: 90,
           instructor_id: 2,
-          activity_name: 2,
+          activity_name: "yoga",
           intensity: 'moderate',
           address: '123 Yoga Lane, Sun Town, CA',
           max_size: 12,

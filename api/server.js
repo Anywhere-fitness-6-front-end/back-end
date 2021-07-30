@@ -64,10 +64,15 @@ server.use((err, req, res, next) => {
   if (err) {
     console.log(err);
 
-    if (err instanceof Array && err.length === 2)
+    if (err instanceof Array && err.length === 2) {
       res.status(err[0]).json({ message: err[1] });
-    else
+    }
+    else if (err instanceof Array && err.length === 3) {
+      res.status(err[0]).json({ message: err[1], data: err[2] });
+    }
+    else {
       res.status(err.status || 500).json(err);
+    }
   }
   else {
     res.status(500).json({ message: "an error occured" });

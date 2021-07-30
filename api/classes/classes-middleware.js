@@ -38,7 +38,8 @@ const verifyClassExists = async (req, res, next) => {
 const verifyNotEnrolled = async (req, res, next) => {
 	const enrolled = await db('attendants').where({user_id: req.token.user_id, class_id: req.params.class_id}).select().first();
 	if (enrolled) {
-		next({status: 400, message: `User is already enrolled for class`, class_id: req.params.class_id, user_id: req.token.user_id })
+		//next({status: 400, message: `User is already enrolled for class`, class_id: req.params.class_id, user_id: req.token.user_id })
+		return next([409, 'User is already enrolled', { class_id: req.params.class_id, user_id: req.token.user_id }])
 	} else {
 		next()
 	}

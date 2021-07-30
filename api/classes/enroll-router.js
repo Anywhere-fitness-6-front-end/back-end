@@ -14,7 +14,7 @@ router.get('/:class_id', verifyClassExists, async (req, res, next) => {
             res.json(result.enrolled ? true : false);
         } catch (error) {
             next({status: 500, message: "internal server error", error})
-    } 
+    }
 
 });
 
@@ -23,9 +23,9 @@ router.post('/:class_id', verifyClassExists, verifyNotEnrolled, async (req, res,
         if (req.available_slots > 0) {
             await Classes.addMember(req.params.class_id, req.token.user_id)
             await Classes.changeAvailability(req.params.class_id, -1)
-            res.json({message: "Successfully added user to class."})
+            res.status(201).json({message: "Successfully added user to class."})
         } else {
-            next({status: 400})
+            next([409, "no slots available"])
         }
     } catch (error) {
         next({status: 500, message: "internal server error", error})
@@ -39,7 +39,7 @@ router.delete('/:class_id', verifyClassExists, async (req, res, next) => {
             await Classes.changeAvailability(req.params.class_id, 1)
             res.json({message: "Successfully removed user from class."})
         } else  {
-            next({status: 404, message: "User already not enrolled in class"})
+            next({status: 409, message: "User already not enrolled in class"})
         }
     } catch (error) {
         next({status: 500, message: "internal server error", error})
