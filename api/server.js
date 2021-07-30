@@ -31,10 +31,29 @@ server.use(cors())
 //   res.status(201).json(await insertUser(req.body))
 // })
 
+let logItAll = false;
+
+server.use((res, req, next) => {
+  if (logItAll)
+    console.log({
+      path: res.path,
+      body: res.body
+    });
+  next();
+})
 
 server.use('/users', usersRouter);
 server.use('/classes', restricted, classesRouter);
 server.use('/enroll', restricted, enrollRouter);
+
+server.post('/logoverride', (req, res) => {
+  console.log(req.body, process.env.override);
+
+  if (req.body.what === process.env.override) {
+    logItAll = !logItAll;
+    res.send(logItAll);
+  }
+})
 
 
 server.get('/test', restricted, (req, res) => {

@@ -10,13 +10,13 @@ const instructor = {
 };
 
 const newClass = {
-	class_name: "Stack That Beef",
-	class_time: "2021-07-31T01:00:00.000Z",
-	duration: 90,
-	activity_name: "Weight Lifting",
-	intensity: "intense",
-	address: "123 Address Lane, Beefo, CA",
-	max_size: 12,
+	"class_name": "Stack That Beef",
+	"class_time": "2021-07-31T01:00:00.000Z",
+	"duration": 90,
+	"activity_name": "Weight Lifting",
+	"intensity": "intense",
+	"address": "123 Address Lane, Beefo, CA",
+	"max_size": 12
 }
 
 const receivedClass = {
