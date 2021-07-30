@@ -39,7 +39,7 @@ router.delete('/:class_id', verifyClassExists, async (req, res, next) => {
             await Classes.changeAvailability(req.params.class_id, 1)
             res.json({message: "Successfully removed user from class."})
         } else  {
-            next({status: 409, message: "User already not enrolled in class"})
+            return next([409, 'User is not enrolled in that class', { class_id: req.params.class_id, user_id: req.token.user_id }])
         }
     } catch (error) {
         next({status: 500, message: "internal server error", error})

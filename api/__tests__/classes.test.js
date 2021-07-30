@@ -21,7 +21,6 @@ const newClass = {
 
 let token;
 
-
 beforeAll(async () => {
 	await db.migrate.rollback();
 	await db.migrate.latest();

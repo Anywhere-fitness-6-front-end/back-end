@@ -26,10 +26,12 @@ exports.up = async (knex) => {
 
     .createTable('attendants', (attendants) => {
       attendants.increments('attendant_id');
-      attendants.integer('user_id').references('user_id').inTable('users');
+      attendants.integer('user_id').references('user_id').inTable('users')
+        .onDelete('CASCADE').onUpdate('CASCADE');
       attendants.integer('class_id').references('class_id').inTable('classes')
-      attendants.unique(['class_id', 'user_id']);
-  })
+        .onDelete('CASCADE').onUpdate('CASCADE');
+      attendants.unique(['class_id', 'user_id']);4
+    })
 }
 
 /** @param {import('knex').Knex} knex */
