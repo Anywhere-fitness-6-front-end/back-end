@@ -19,7 +19,13 @@ router.post('/login', validateUser, verifyUserExists, async (req, res, next) => 
 	if (checkPassword(req.postedUser.password, req.user.password)) {
 		return res.status(200).json({
 			message: `welcome, ${req.user.name}`,
-			token: buildToken(req.user)
+			token: buildToken(req.user),
+			user: {
+				id: req.user.user_id,
+				email: req.user.email,
+				name: req.user.name,
+				instructor: req.user.instructor
+			}
 		})
 	}
 	else {
